@@ -4,7 +4,7 @@ import { mainDark, mainWhite } from "constants/colors";
 
 export const GlobalStyles = createGlobalStyle`
   body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: ${mainWhite};
     color: ${mainDark};
   }

@@ -1,22 +1,21 @@
 import React, { createContext } from "react";
 
-import { storeProducts, detailProduct } from "constants/data";
+import { storeProducts } from "constants/data";
 
 const StoreContext = createContext();
 
 const StoreContextProvider = ({ children }) => {
-  const handleDetail = () => {
-    console.log("hello from detail fn");
+  const getItem = (id) => {
+    const product = storeProducts.find((item) => item.id === parseInt(id));
+    return product;
   };
 
-  const addToCart = () => {
-    console.log("hello from addToCart fn");
+  const addToCart = (id) => {
+    console.log("hello from addToCart fn with " + id);
   };
 
   return (
-    <StoreContext.Provider
-      value={{ storeProducts, detailProduct, handleDetail, addToCart }}
-    >
+    <StoreContext.Provider value={{ storeProducts, addToCart, getItem }}>
       {children}
     </StoreContext.Provider>
   );

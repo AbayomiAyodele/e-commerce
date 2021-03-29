@@ -1,19 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
 
+import { FaShoppingCart } from "react-icons/fa";
 import { Col } from "react-bootstrap";
+
 import { ProductCard, ImageContainer, CartBtn } from "./SingleProduct.styled";
 
 const SingleProduct = ({ product: { id, title, img, price, inCart } }) => {
   return (
     <Col xs={9} md={6} lg={3} className='my-3 mx-auto'>
       <ProductCard>
-        <ImageContainer
-          className='p-5'
-          onClick={() => console.log("u clicked the image container")}
-        >
-          <Link to='/details'>
+        <ImageContainer className='p-5'>
+          <Link to={`/details/${id}`}>
             <img src={img} alt={title} className='card-img-top' />
           </Link>
 
@@ -36,6 +35,17 @@ const SingleProduct = ({ product: { id, title, img, price, inCart } }) => {
       </ProductCard>
     </Col>
   );
+};
+
+// setting up PropTypes
+SingleProduct.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.number,
+    img: PropTypes.string,
+    title: PropTypes.string,
+    price: PropTypes.number,
+    inCart: PropTypes.bool,
+  }).isRequired,
 };
 
 export default SingleProduct;
