@@ -2,14 +2,15 @@ import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { StoreContext } from "context/storeContext";
-
 import { Container, Row, Col, Button } from "react-bootstrap";
 
 const Details = () => {
   const { id } = useParams(); //get dynamic id from url
 
-  const { addToCart, getItem } = useContext(StoreContext);
-  const { title, img, company, price, info, inCart } = getItem(id);
+  const { dispatch, products } = useContext(StoreContext);
+  const { title, img, company, price, info, inCart } = products.find(
+    (item) => item.id === parseInt(id)
+  );
 
   return (
     <Container className='py-5'>
@@ -50,7 +51,7 @@ const Details = () => {
               disabled={inCart}
               variant='outline-primary'
               className='ml-3'
-              onClick={() => addToCart(id)}
+              onClick={() => dispatch({ type: "CART_ADD", payload: { id } })}
             >
               {inCart ? "In Cart" : "Add To Cart"}
             </Button>

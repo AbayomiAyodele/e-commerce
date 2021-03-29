@@ -7,7 +7,7 @@ import SingleProduct from "components/singleProduct/SingleProduct";
 import { StoreContext } from "context/storeContext";
 
 const Products = () => {
-  const { storeProducts } = useContext(StoreContext);
+  const { products } = useContext(StoreContext);
 
   return (
     <>
@@ -15,7 +15,7 @@ const Products = () => {
         <Container>
           <Title name='our products.' />
           <Row>
-            {storeProducts.map((product) => (
+            {products.map((product) => (
               <SingleProduct key={product.id} product={product} />
             ))}
           </Row>

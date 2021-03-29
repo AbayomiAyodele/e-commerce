@@ -1,21 +1,38 @@
-import React, { createContext } from "react";
+import React, { createContext, useReducer } from "react";
 
 import { storeProducts } from "constants/data";
-
 const StoreContext = createContext();
 
-const StoreContextProvider = ({ children }) => {
-  const getItem = (id) => {
-    const product = storeProducts.find((item) => item.id === parseInt(id));
-    return product;
-  };
+const initialState = { products: [...storeProducts], cart: [] };
 
-  const addToCart = (id) => {
-    console.log("hello from addToCart fn with " + id);
-  };
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "CART_ADD":
+      const item = state.products.find(
+        (product) => product.id === parseInt(action.payload.id)
+      );
+      return {
+        ...state,
+        cart: [...state.cart, { ...item, inCart: true }],
+
+        products: state.products.map((product) => {
+          if (product.id === parseInt(action.payload.id)) {
+            return { ...product, inCart: true };
+          }
+          return product;
+        }),
+      };
+
+    default:
+      return state;
+  }
+};
+
+const StoreContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <StoreContext.Provider value={{ storeProducts, addToCart, getItem }}>
+    <StoreContext.Provider value={{ ...state, dispatch }}>
       {children}
     </StoreContext.Provider>
   );

@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import { StoreContext } from "context/storeContext";
 import { FaShoppingCart } from "react-icons/fa";
 import { Col } from "react-bootstrap";
 
 import { ProductCard, ImageContainer, CartBtn } from "./SingleProduct.styled";
 
 const SingleProduct = ({ product: { id, title, img, price, inCart } }) => {
+  const { dispatch } = useContext(StoreContext);
+
   return (
     <Col xs={9} md={6} lg={3} className='my-3 mx-auto'>
       <ProductCard>
@@ -18,9 +21,13 @@ const SingleProduct = ({ product: { id, title, img, price, inCart } }) => {
 
           <CartBtn
             disabled={inCart}
-            onClick={() => console.log("added to cart")}
+            onClick={() => dispatch({ type: "CART_ADD", payload: { id } })}
           >
-            {inCart ? <p className='mb-0'>In Cart</p> : <FaShoppingCart />}
+            {inCart ? (
+              <p className='mb-0 text-muted'>In Cart</p>
+            ) : (
+              <FaShoppingCart />
+            )}
           </CartBtn>
         </ImageContainer>
 
