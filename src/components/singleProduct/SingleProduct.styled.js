@@ -48,3 +48,10 @@ export const ImageContainer = styled.div`
     transform: translate(0, 0);
   }
 `;
+
+export const ModalContent = styled.div`
+  margin: 0 auto;
+  text-align: center;
+  text-transform: capitalize;
+  padding: 4em;
+`;

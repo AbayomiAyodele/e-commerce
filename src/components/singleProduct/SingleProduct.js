@@ -8,7 +8,12 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Row, Col, Modal, Button } from "react-bootstrap";
 
 import ModalContainer from "../modal/ModalContainer";
-import { ProductCard, ImageContainer, CartBtn } from "./SingleProduct.styled";
+import {
+  ProductCard,
+  ImageContainer,
+  CartBtn,
+  ModalContent,
+} from "./SingleProduct.styled";
 
 const SingleProduct = ({ product: { id, title, img, price, inCart } }) => {
   const { dispatch } = useContext(StoreContext);
@@ -53,23 +58,43 @@ const SingleProduct = ({ product: { id, title, img, price, inCart } }) => {
         ? ReactDOM.createPortal(
             <ModalContainer>
               <Row>
-                <Col xs={8} md={6} lg={4} className='mx-auto '>
-                  <Modal
-                    show={showModal}
-                    aria-labelledby='contained-modal-title-vcenter'
-                    centered
-                  >
+                <Modal
+                  show={showModal}
+                  aria-labelledby='contained-modal-title-vcenter'
+                  centered
+                >
+                  <ModalContent>
                     <Modal.Title className='text-center text-capitalize'>
                       item added to the cart
                     </Modal.Title>
-                    <Button
-                      variant='secondary'
-                      onClick={() => setShowModal(false)}
-                    >
-                      Close
-                    </Button>
-                  </Modal>
-                </Col>
+
+                    <Modal.Body>
+                      <img src={img} className='img-fluid' alt='product' />
+                      <h5>{title}</h5>
+                      <h5 className='text-muted'>price: ${price}</h5>
+                    </Modal.Body>
+
+                    <Modal.Footer style={{ flexDirection: "column" }}>
+                      <Link to='/'>
+                        <Button
+                          variant='success'
+                          onClick={() => setShowModal(false)}
+                        >
+                          Continue Shopping
+                        </Button>
+                      </Link>
+
+                      <Link to='/cart'>
+                        <Button
+                          variant='info'
+                          onClick={() => setShowModal(false)}
+                        >
+                          Go To Cart
+                        </Button>
+                      </Link>
+                    </Modal.Footer>
+                  </ModalContent>
+                </Modal>
               </Row>
             </ModalContainer>,
             document.body
