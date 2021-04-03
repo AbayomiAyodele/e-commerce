@@ -17,7 +17,7 @@ function App() {
 
         <Route path='/cart' component={Cart} />
 
-        <Default />
+        <Route component={Default} />
       </Switch>
     </>
   );
